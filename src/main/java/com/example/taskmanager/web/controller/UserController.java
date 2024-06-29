@@ -33,7 +33,10 @@ public class UserController {
 
     @Operation(summary = "Update user")
     @PutMapping
-    public UserDto update(@Validated(OnUpdate.class) @RequestBody UserDto dto) {
+    public UserDto update(
+            @Validated(OnUpdate.class)
+            @RequestBody UserDto dto
+    ) {
         User user = userMapper.toEntity(dto);
         User updatedUser = userService.update(user);
         return userMapper.toDto(updatedUser);
@@ -41,14 +44,18 @@ public class UserController {
 
     @Operation(summary = "Get UserDTO by id")
     @GetMapping("/{id}")
-    public UserDto getById(@PathVariable Long id) {
+    public UserDto getById(
+            @PathVariable Long id
+    ) {
         User user = userService.getById(id);
         return userMapper.toDto(user);
     }
 
     @Operation(summary = "Delete user by id")
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public void delete(
+            @PathVariable Long id
+    ) {
         userService.delete(id);
     }
 
@@ -63,7 +70,11 @@ public class UserController {
 
     @Operation(summary = "Add task to user")
     @PostMapping("/{id}/tasks")
-    public TaskDto createTask(@PathVariable Long id, @Validated(OnCreate.class) @RequestBody TaskDto dto) {
+    public TaskDto createTask(
+            @PathVariable Long id,
+            @Validated(OnCreate.class)
+            @RequestBody TaskDto dto
+    ) {
         Task task = taskMapper.toEntity(dto);
         Task createdTask = taskService.create(task, id);
         return taskMapper.toDto(createdTask);
