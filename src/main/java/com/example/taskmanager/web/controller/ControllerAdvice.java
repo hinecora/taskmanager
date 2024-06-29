@@ -17,7 +17,7 @@ import org.springframework.web.servlet.View;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//@RestControllerAdvice
+@RestControllerAdvice
 public class ControllerAdvice {
 
     private final View error;
