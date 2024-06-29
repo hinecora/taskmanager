@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/taskmanager
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  sql:
+    init:
+      mode: never
+      continue-on-error: false
+  liquibase:
+    change-log: classpath:liquibase/db.changelog.yaml
+    enabled: true
+    default-schema: taskmanager
+
+
+security:
+  jwt:
+    secret: YWpoZGFiO2x3a2Q7YWx3amdsZWphYndram5jYWRtbmF3Lixhd2Vhd2U=
+    access: 3600000
+    refresh: 2592000000
+springdoc:
+  override-with-generic-response: false
