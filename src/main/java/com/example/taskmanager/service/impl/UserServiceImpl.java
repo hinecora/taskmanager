@@ -6,6 +6,10 @@ import com.example.taskmanager.domain.user.User;
 import com.example.taskmanager.repository.UserRepository;
 import com.example.taskmanager.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +25,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
+    @Cacheable(value = "UserService::getById", key = "#id")
     public User getById(
             Long id
     ) {
@@ -29,6 +34,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Cacheable(value = "UserService::getByUsername", key = "#username")
     public User getByUsername(
             String username
     ) {
@@ -38,6 +44,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
+    @Caching(put = {
+            @CachePut(value = "UserService::getById", key = "#user.id"),
+            @CachePut(value = "UserService::getByUsername", key = "#user.username")
+    })
     public User update(
             User user
     ) {
@@ -51,6 +61,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
+    @Caching(cacheable = {
+            @Cacheable(value = "UserService::getById", key = "#user.id"),
+            @Cacheable(value = "UserService::getByUsername", key = "#user.username")
+    })
     public User create(
             User user
     ) {
@@ -68,6 +82,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Cacheable(value = "UserService::isTaskOwner", key = "#userId + '.' + #taskId")
     public boolean isTaskOwner(
             Long userId,
             Long taskId
@@ -77,6 +92,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
+    @CacheEvict(value = "UserService::getById", key = "#id")
     public void delete(
             Long id
     ) {

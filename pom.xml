@@ -41,6 +41,7 @@
 		<preliquibase.version>1.5.1</preliquibase.version>
 		<liquibase.version>4.28.0</liquibase.version>
 		<springdoc.version>2.5.0</springdoc.version>
+		<netty.version>4.1.111.Final</netty.version>
 	</properties>
 
 	<dependencies>
@@ -63,6 +64,10 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
 
 		<dependency>
@@ -133,6 +138,11 @@
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
 			<version>${springdoc.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-transport-native-epoll</artifactId>
+			<version>${netty.version}</version>
 		</dependency>
 	</dependencies>
 
